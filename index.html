@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gasless Action Rehearsal</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">imToken Opus Prototype</p>
+          <h1>免 Gas 行动排练</h1>
+        </div>
+        <div class="wallet-chip" aria-label="Mock wallet account">
+          <span class="status-dot"></span>
+          <span id="walletAddress">0x91c7...A42e</span>
+        </div>
+      </header>
+
+      <section class="workspace" aria-label="Gasless wallet workspace">
+        <aside class="side-rail">
+          <div class="network-block">
+            <span class="network-label">Network</span>
+            <strong>Sepolia Mock</strong>
+          </div>
+
+          <nav class="steps" aria-label="Action progress">
+            <button class="step-button is-active" type="button" data-step="compose">
+              <span>1</span>
+              <strong>Compose</strong>
+            </button>
+            <button class="step-button" type="button" data-step="sponsor">
+              <span>2</span>
+              <strong>Sponsor</strong>
+            </button>
+            <button class="step-button" type="button" data-step="review">
+              <span>3</span>
+              <strong>Review</strong>
+            </button>
+            <button class="step-button" type="button" data-step="result">
+              <span>4</span>
+              <strong>Result</strong>
+            </button>
+          </nav>
+
+          <div class="asset-stack" aria-label="Mock assets">
+            <div>
+              <span>USDC</span>
+              <strong id="usdcBalance">420.00</strong>
+            </div>
+            <div>
+              <span>ETH</span>
+              <strong>0.0000</strong>
+            </div>
+          </div>
+        </aside>
+
+        <section class="panel task-panel" aria-labelledby="taskTitle">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Action batch</p>
+              <h2 id="taskTitle">选择链上任务</h2>
+            </div>
+            <span class="badge badge-info" id="riskBadge">Info</span>
+          </div>
+
+          <div class="task-grid" id="taskGrid" aria-label="Task choices"></div>
+
+          <div class="controls-grid">
+            <label class="field">
+              <span>Amount</span>
+              <input id="amountInput" type="number" min="1" max="999" step="1" value="80" />
+            </label>
+            <label class="field">
+              <span>Approval</span>
+              <select id="approvalSelect">
+                <option value="exact">Exact amount</option>
+                <option value="buffer">120% buffer</option>
+                <option value="unlimited">Unlimited</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Sponsor</span>
+              <select id="sponsorSelect">
+                <option value="standard">Standard sponsor</option>
+                <option value="strict">Strict sponsor</option>
+                <option value="blocked">No sponsor match</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="route-visual" aria-label="Gasless action route">
+            <div class="route-node">
+              <span class="node-icon">A</span>
+              <strong>Wallet</strong>
+              <small>intent owner</small>
+            </div>
+            <span class="route-line"></span>
+            <div class="route-node sponsor-node">
+              <span class="node-icon">S</span>
+              <strong>Sponsor</strong>
+              <small id="sponsorState">eligible</small>
+            </div>
+            <span class="route-line"></span>
+            <div class="route-node">
+              <span class="node-icon">P</span>
+              <strong>Protocol</strong>
+              <small id="protocolName">vault</small>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel review-panel" aria-labelledby="reviewTitle">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Pre-sign review</p>
+              <h2 id="reviewTitle">批量调用审阅</h2>
+            </div>
+            <button class="icon-button" id="resetButton" type="button" aria-label="Reset rehearsal" title="Reset rehearsal">R</button>
+          </div>
+
+          <div class="call-list" id="callList"></div>
+
+          <div class="sponsor-card">
+            <div>
+              <p class="eyebrow">Sponsor policy</p>
+              <h3 id="sponsorTitle">标准赞助</h3>
+            </div>
+            <p id="sponsorCopy"></p>
+            <dl>
+              <div>
+                <dt>Gas paid by</dt>
+                <dd id="gasPaidBy">Demo Sponsor</dd>
+              </div>
+              <div>
+                <dt>User pays</dt>
+                <dd id="userPays">0 ETH</dd>
+              </div>
+              <div>
+                <dt>Policy state</dt>
+                <dd id="policyState">Pass</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="warning-box" id="warningBox">
+            <strong id="warningTitle">Readable intent ready</strong>
+            <p id="warningText">Review every call before the mock signature is created.</p>
+          </div>
+
+          <button class="primary-button" id="signButton" type="button">Create mock signature</button>
+
+          <div class="result-box" id="resultBox" hidden>
+            <p class="eyebrow">Mock result</p>
+            <h3 id="resultTitle">Sponsor accepted the batch</h3>
+            <code id="mockHash">mock_0x0000</code>
+            <p id="resultCopy"></p>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="./src/app.js"></script>
+  </body>
+</html>
